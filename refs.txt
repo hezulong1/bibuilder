@@ -1,0 +1,7 @@
+https://github.com/food-billboard/create-chart
+https://github.com/miyuesc/vue-data-visualization
+https://github.com/337547038/ak-design-manage
+https://github.com/heyuhangs/bi-designer
+https://github.com/gcpaas/DataRoom
+https://github.com/ycl8/visual-drag-vue3
+https://github.com/mousheng/lowcoder_CN
