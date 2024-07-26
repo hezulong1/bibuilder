@@ -8,8 +8,16 @@
     <meta name="renderer" content="webkit">
     <meta name="theme-color" content="#ffffff">
     <title>BI Builder</title>
+    <script>
+      ;(function () {
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        var setting = localStorage.getItem('bi-color-scheme') || 'auto'
+        if (setting === 'dark' || (prefersDark && setting !== 'light'))
+          document.documentElement.classList.toggle('dark', true)
+      })()
+    </script>
   </head>
-  <body>
+  <body class="font-sans font-mono">
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

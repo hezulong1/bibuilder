@@ -1,16 +1,17 @@
 {
   "name": "bibuilder",
-  "version": "0.0.0",
+  "private": true,
   "author": "hezulong1",
   "type": "module",
   "packageManager": "yarn@1.22.22",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --force",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@unocss/reset": "^0.61.5",
     "@vueuse/core": "^10.11.0",
     "radix-vue": "^1.9.2",
     "vue": "^3.4.31",
@@ -23,7 +24,10 @@
     "eslint": "^8.57.0",
     "eslint-config-h21": "^0.16.0",
     "typescript": "~5.3.3",
-    "vite": "^5.3.4"
+    "unocss": "^0.61.5",
+    "unplugin-auto-import": "^0.18.2",
+    "vite": "^5.3.4",
+    "vite-plugin-webfont-dl": "^3.9.4"
   },
   "engines": {
     "node": ">=18"
