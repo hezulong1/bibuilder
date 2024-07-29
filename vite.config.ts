@@ -14,7 +14,7 @@ export default defineConfig({
     Unocss(),
     WebfontDownload(),
     AutoImport({
-      dts: 'src/auto-imports.d.ts',
+      dts: 'src/typings/auto-imports.d.ts',
       imports: [
         'vue',
         '@vueuse/core',
