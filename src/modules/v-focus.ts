@@ -1,7 +1,7 @@
+import type { UserModule } from '../types';
 import { nextTick } from 'vue';
-import type { BiModule } from '.';
 
-export default <BiModule>{
+export default <UserModule>{
   onAppInit(app) {
     app.directive('focus', {
       mounted: el => nextTick(() => el.focus()),

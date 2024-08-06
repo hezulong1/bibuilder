@@ -1,5 +1,5 @@
 import type { App } from 'vue';
 
-export interface BiModule {
+export interface UserModule {
   onAppInit?: (app: App) => void;
 }

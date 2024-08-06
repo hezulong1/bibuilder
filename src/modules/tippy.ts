@@ -1,4 +1,4 @@
-import type { BiModule } from '.';
+import type { UserModule } from '../types';
 import VueTippy, { roundArrow, setDefaultProps } from 'vue-tippy';
 
 import 'tippy.js/dist/tippy.css';
@@ -6,7 +6,7 @@ import 'tippy.js/animations/scale-subtle.css';
 import 'tippy.js/dist/border.css';
 import 'tippy.js/dist/svg-arrow.css';
 
-export default <BiModule>{
+export default <UserModule>{
   onAppInit(app) {
     app.use(VueTippy);
 

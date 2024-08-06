@@ -3,3 +3,4 @@ https://github.com/miyuesc/vue-data-visualization
 https://github.com/heyuhangs/bi-designer
 https://github.com/gcpaas/DataRoom
 https://github.com/mousheng/lowcoder_CN
+https://gitee.com/dromara/go-view

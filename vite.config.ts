@@ -14,10 +14,13 @@ export default defineConfig({
     Unocss(),
     WebfontDownload(),
     AutoImport({
-      dts: 'src/typings/auto-imports.d.ts',
+      dts: 'typings/auto-imports.d.ts',
       imports: [
         'vue',
         '@vueuse/core',
+        {
+          '@hoppscotch/vue-toasted': ['useToasted'],
+        },
       ],
       vueTemplate: true,
     }),
