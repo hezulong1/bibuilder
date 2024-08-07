@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Design from '@/design/index.vue';
+import Editor from '@/editor/editor.vue';
 </script>
 
 <template>
-  <Design />
+  <Editor />
 </template>

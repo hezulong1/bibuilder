@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     Vue(),
     VueJsx(),
-    Unocss(),
+    Unocss(__dirname),
     WebfontDownload(),
     AutoImport({
       dts: 'typings/auto-imports.d.ts',
@@ -26,9 +26,10 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: [
-      { find: '@/', replacement: `${path.resolve('src')}/` },
-    ],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@editor': path.resolve(__dirname, 'src/editor'),
+    },
   },
   build: {
     minify: false,

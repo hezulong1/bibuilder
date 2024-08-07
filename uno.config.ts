@@ -1,4 +1,4 @@
-import { defineConfig, presetUno, presetWebFonts } from 'unocss';
+import { defineConfig, presetUno, presetWebFonts, transformerDirectives } from 'unocss';
 
 export default defineConfig({
   content: {
@@ -15,4 +15,16 @@ export default defineConfig({
       },
     }),
   ],
+  transformers: [
+    transformerDirectives(),
+  ],
+  shortcuts: [
+    ['box-center', 'flex justify-center items-center'],
+    ['inline-box-center', 'inline-flex justify-center items-center'],
+  ],
+  theme: {
+    colors: {
+      accent: 'var(--accent-color)',
+    },
+  },
 });

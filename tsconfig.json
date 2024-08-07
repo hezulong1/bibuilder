@@ -11,7 +11,8 @@
     "moduleResolution": "Bundler",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@editor/*": ["src/editor/*"]
     },
     "resolveJsonModule": true,
 
