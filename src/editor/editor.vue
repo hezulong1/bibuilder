@@ -21,7 +21,7 @@ import IconButton from '@/ui/IconButton.vue';
       <TextButton label="default" disabled class="ml-1" />
       <TextButton label="primary" primary disabled class="ml-1" />
 
-      <IconButton class="ml-1">
+      <IconButton class="ml-1" title="Home">
         <svg
           viewBox="64 64 896 896"
           focusable="false"

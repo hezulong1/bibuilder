@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useTippy } from 'vue-tippy';
+
 const props = defineProps<{
+  title?: string;
   primary?: boolean;
   disabled?: boolean;
 }>();
@@ -10,6 +13,7 @@ const emit = defineEmits<{
 
 const hover = ref(false);
 const active = ref(false);
+const domNodeRef = ref();
 
 const classNames = computed(() => {
   const result = [];
@@ -31,8 +35,16 @@ const classNames = computed(() => {
   return result;
 });
 
+const tippy = useTippy(domNodeRef, {
+  content: props.title,
+  interactive: false,
+  hideOnClick: false,
+  trigger: 'click',
+});
+
 function handleClick(e: Event) {
   if (props.disabled) return;
+  tippy.show();
   emit('click', e as PointerEvent);
 }
 
@@ -57,6 +69,7 @@ function onPointerUp(e: PointerEvent) {
 
 <template>
   <a
+    ref="domNodeRef"
     class="ui-IconButton
       inline-flex items-center justify-center w-28px h-28px
       rounded-sm align-top
@@ -65,8 +78,8 @@ function onPointerUp(e: PointerEvent) {
       no-underline
     "
     :class="classNames"
-    :disabled="disabled"
-    :aria-disabled="disabled"
+    :disabled="disabled ? 'true' : undefined"
+    :aria-disabled="disabled ? 'true' : undefined"
     role="button"
     @mouseover="onMouseOver"
     @mouseout="onMouseOut"

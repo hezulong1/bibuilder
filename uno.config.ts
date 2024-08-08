@@ -32,6 +32,7 @@ export default defineConfig({
       default: 'var(--bi-default)',
       defaultHover: 'var(--bi-defaultHover)',
       defaultActive: 'var(--bi-defaultActive)',
+      tooltip: 'var(--bi-tooltip)',
     },
   },
 });
