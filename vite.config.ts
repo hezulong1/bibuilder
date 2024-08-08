@@ -7,40 +7,50 @@ import AutoImport from 'unplugin-auto-import/vite';
 import WebfontDownload from 'vite-plugin-webfont-dl';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    Vue(),
-    VueJsx(),
-    Unocss(__dirname),
-    WebfontDownload(),
-    AutoImport({
-      dts: 'typings/auto-imports.d.ts',
-      imports: [
-        'vue',
-        '@vueuse/core',
-        {
-          '@hoppscotch/vue-toasted': ['useToasted'],
-        },
-      ],
-      vueTemplate: true,
-    }),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@editor': path.resolve(__dirname, 'src/editor'),
+export default defineConfig(({ command }) => {
+  const dev = command === 'serve';
+
+  return {
+    plugins: [
+      Vue(),
+      VueJsx(),
+      Unocss(__dirname),
+      WebfontDownload(),
+      AutoImport({
+        dts: 'typings/auto-imports.d.ts',
+        imports: [
+          'vue',
+          '@vueuse/core',
+          {
+            '@unhead/vue': ['useHead'],
+          },
+          {
+            '@hoppscotch/vue-toasted': ['useToasted'],
+          },
+        ],
+        vueTemplate: true,
+      }),
+    ],
+    define: {
+      __DEV__: JSON.stringify(dev),
     },
-  },
-  build: {
-    minify: false,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+        '@editor': path.resolve(__dirname, 'src/editor'),
+      },
+    },
+    build: {
+      minify: false,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
         },
       },
     },
-  },
+  };
 });

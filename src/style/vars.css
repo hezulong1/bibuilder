@@ -1,0 +1,13 @@
+:root {
+  --bi-fg-main: rgba(255, 255, 255, 0.87);
+  --bi-bg-main: #141414;
+  --bi-line-main: #303030;
+
+  --bi-primary: #1677ff;
+  --bi-primaryHover: #4096ff;
+  --bi-primaryActive: #0958d9;
+
+  --bi-default: #343535;
+  --bi-defaultHover: #3e4242;
+  --bi-defaultActive: #2d2d2d;
+}

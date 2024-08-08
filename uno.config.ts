@@ -18,13 +18,20 @@ export default defineConfig({
   transformers: [
     transformerDirectives(),
   ],
-  shortcuts: [
-    ['box-center', 'flex justify-center items-center'],
-    ['inline-box-center', 'inline-flex justify-center items-center'],
-  ],
+  shortcuts: {
+    'box-center': 'flex justify-center items-center',
+  },
   theme: {
     colors: {
-      accent: 'var(--accent-color)',
+      fgMain: 'var(--bi-fg-main)',
+      bgMain: 'var(--bi-bg-main)',
+      lineMain: 'var(--bi-line-main)',
+      primary: 'var(--bi-primary)',
+      primaryHover: 'var(--bi-primaryHover)',
+      primaryActive: 'var(--bi-primaryActive)',
+      default: 'var(--bi-default)',
+      defaultHover: 'var(--bi-defaultHover)',
+      defaultActive: 'var(--bi-defaultActive)',
     },
   },
 });

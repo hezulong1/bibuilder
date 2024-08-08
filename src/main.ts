@@ -2,7 +2,7 @@ import type { UserModule } from './types';
 import { createApp } from 'vue';
 
 import '@unocss/reset/tailwind.css';
-import './style/base.css';
+import './style/main.css';
 import 'virtual:uno.css';
 
 import App from './App.vue';
