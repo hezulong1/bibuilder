@@ -1,5 +1,4 @@
 :root {
-  /* set uno.css */
   --un-default-border-color: var(--bi-line-main);
 
   color: var(--bi-fg-main);
@@ -12,92 +11,57 @@
 }
 
 body {
-  padding: 0;
+  --uno: h-full p-0;
+  --uno: select-none overflow-hidden;
+  --uno: leading-normal font-sans;
+
   font-size: 12px;
-  height: 100%;
-  overflow: hidden;
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 .tippy-box[data-theme~='tooltip'] {
-  @apply bg-tooltip;
-  @apply border-solid border-tooltip;
-  @apply rounded;
-  @apply shadow;
+  --uno: border-solid border-tooltip;
+  --uno: text-11px leading-3 font-semibold;
+  --uno: rounded-sm;
+  --uno: text-fgMain bg-default shadow;
+}
 
-  .tippy-content {
-    @apply flex;
-    @apply text-xs text-primary;
-    @apply font-semibold;
-    @apply px-2 py-1;
-    @apply truncate;
-    @apply items-center;
+.tippy-box[data-theme~='tooltip'] .tippy-content {
+  --uno: px-2 py-1.5;
+}
 
-    kbd {
-      @apply hidden;
-      @apply font-sans;
-      background-color: rgba(107, 114, 128, 0.45);
-      @apply rounded-sm;
-      @apply px-1;
-      @apply my-0 ml-1;
-      @apply truncate;
-      @apply sm:inline-flex;
-    }
+.tippy-box[data-theme~='tooltip'] .tippy-content kbd {
+  --uno: my-0 m1-1 px-1;
+  --uno: truncate font-sans;
+  --uno: rounded-sm;
+  background-color: rgba(107, 114, 128, 0.45);
+}
 
-    .env-icon {
-      @apply transition;
-      @apply inline-flex;
-      @apply items-center;
-    }
-  }
-
-  .tippy-svg-arrow {
-    svg:first-child {
-      @apply fill-tooltip;
-    }
-
-    svg:last-child {
-      @apply fill-tooltip;
-    }
-  }
+.tippy-box[data-theme~='tooltip'] .tippy-svg-arrow {
+  --uno: fill-default;
 }
 
 .tippy-box[data-theme~='popover'] {
-  @apply bg-popover;
-  @apply border-solid border-dividerDark;
-  @apply rounded;
-  @apply shadow-lg;
-  @apply max-w-[45vw] #{!important};
+  --uno: max-w-[45vw];
+  --uno: border-none;
+  --uno: rounded-sm;
+  --uno: text-fgMain bg-default shadow-lg;
+}
 
-  .tippy-content {
-    @apply flex flex-col;
-    @apply max-h-[45vh];
-    @apply items-stretch;
-    @apply overflow-y-auto;
-    @apply text-body text-secondary;
-    @apply p-2;
-    @apply leading-body;
-    @apply focus:outline-none;
-    scroll-behavior: smooth;
+.tippy-box[data-theme~='popover'] .tippy-content {
+  --uno: flex flex-col items-stretch;
+  --uno: max-h-[45vh] py-1;
+  --uno: focus:outline-none;
+}
 
-    & > span {
-      @apply block #{!important};
-    }
-  }
+.tippy-box[data-theme~='popover'] .tippy-content > * {
+  --uno: block;
+}
 
-  .tippy-svg-arrow {
-    svg:first-child {
-      @apply fill-dividerDark;
-    }
-
-    svg:last-child {
-      @apply fill-popover;
-    }
-  }
+.tippy-box[data-theme~='popover'] .tippy-svg-arrow {
+  --uno: fill-default;
 }
 
 [data-v-tippy] {
-  @apply flex flex-1;
-  @apply truncate;
+  --uno: flex flex-1;
+  --uno: truncate;
 }

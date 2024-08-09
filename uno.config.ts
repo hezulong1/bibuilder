@@ -1,4 +1,5 @@
-import { defineConfig, presetUno, presetWebFonts, transformerDirectives } from 'unocss';
+import { defineConfig, presetUno, presetIcons, presetWebFonts, transformerDirectives } from 'unocss';
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
 
 export default defineConfig({
   content: {
@@ -12,6 +13,17 @@ export default defineConfig({
       fonts: {
         sans: 'Inter',
         mono: 'IBM Plex Mono',
+      },
+    }),
+    presetIcons({
+      extraProperties: {
+        display: 'inline-block',
+        'vertical-align': 'middle',
+        width: '14px',
+        height: '14px',
+      },
+      collections: {
+        'vscode': FileSystemIconLoader('./node_modules/@vscode/codicons/src/icons'),
       },
     }),
   ],

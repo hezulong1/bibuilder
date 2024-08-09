@@ -14,21 +14,30 @@ export default defineConfig(({ command }) => {
     plugins: [
       Vue(),
       VueJsx(),
-      Unocss(__dirname),
+      Unocss(),
       WebfontDownload(),
       AutoImport({
         dts: 'typings/auto-imports.d.ts',
+        vueTemplate: true,
         imports: [
           'vue',
           '@vueuse/core',
           {
-            '@unhead/vue': ['useHead'],
+            '@unhead/vue': [
+              'useHead',
+            ],
           },
           {
-            '@hoppscotch/vue-toasted': ['useToasted'],
+            '@hoppscotch/vue-toasted': [
+              ['useToasted', 'useToast'],
+            ],
+          },
+          {
+            'vue-tippy': [
+              'useTippy',
+            ],
           },
         ],
-        vueTemplate: true,
       }),
     ],
     define: {

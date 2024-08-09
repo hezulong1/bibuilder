@@ -25,11 +25,14 @@
     "vue3-sketch-ruler": "^2.0.7"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.14.12",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vitejs/plugin-vue-jsx": "^4.0.0",
+    "@vscode/codicons": "^0.0.36",
     "eslint": "^8.57.0",
     "eslint-config-h21": "^0.16.0",
+    "fs-extra": "^11.2.0",
     "typescript": "~5.3.3",
     "unocss": "0.61.5",
     "unplugin-auto-import": "^0.18.2",
