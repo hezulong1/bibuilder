@@ -45,6 +45,7 @@ export default defineConfig({
       defaultHover: 'var(--bi-defaultHover)',
       defaultActive: 'var(--bi-defaultActive)',
       tooltip: 'var(--bi-tooltip)',
+      '#primary': '#1677ff',
     },
   },
 });

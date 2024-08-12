@@ -8,6 +8,8 @@ export interface TabsOption<TO> {
 
 withDefaults(defineProps<{
   orientation?: 'vertical' | 'horizontal';
+  wrapClass?: unknown;
+  triggerClass?: unknown;
   options?: TabsOption<T>[];
 }>(), {
   orientation: 'horizontal',
@@ -26,15 +28,36 @@ function handleUpdateModel(payload: T) {
 </script>
 
 <template>
-  <Radix.TabsRoot :model-value="model" :orientation="orientation" @update:model-value="handleUpdateModel">
-    <Radix.TabsList>
-      <Radix.TabsIndicator class="absolute px-8 left-0 h-[2px] bottom-0 w-[--radix-tabs-indicator-size] translate-x-[--radix-tabs-indicator-position] rounded-full transition-[width,transform] duration-300">
-        <div class="bg-grass8 w-full h-full" />
-      </Radix.TabsIndicator>
-
-      <Radix.TabsTrigger v-for="opt of options" :key="opt.value" :value="opt.value">
+  <Radix.TabsRoot class="ui-Tabs" :model-value="model" :orientation="orientation" @update:model-value="handleUpdateModel">
+    <Radix.TabsList :class="[{ 'relative box-center': true, 'flex-col': orientation === 'vertical' }, wrapClass]">
+      <Radix.TabsTrigger
+        v-for="opt of options"
+        ref="buttonRefs"
+        :key="opt.value"
+        :value="opt.value"
+        class="
+          flex-1 box-center p-1
+          text-gray
+          hover:text-white
+          data-[state=active]:text-white
+          outline-none
+        "
+      >
         <slot name="trigger" v-bind="opt" />
       </Radix.TabsTrigger>
+
+      <Radix.TabsIndicator
+        class="
+          absolute left-0 top-0
+          rounded-full
+          w-2px h-$radix-tabs-indicator-size
+          translate-y-$radix-tabs-indicator-position
+          transition-[width,transform]
+          duration-300
+        "
+      >
+        <div class="bg-primary size-full" />
+      </Radix.TabsIndicator>
     </Radix.TabsList>
 
     <slot />

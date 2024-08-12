@@ -6,7 +6,7 @@ import TextButton from '@/ui/TextButton.vue';
 
 <template>
   <div class="part titlebar absolute top-0 left-0 w-full h-9 border-b">
-    <div class="h-full m-auto grid grid-cols-3 grid-rows-1 gap-2 items-center">
+    <div class="content h-full m-auto grid grid-cols-3 grid-rows-1 gap-2 items-center">
       <div class="text-lg mx-4">Bi Editor</div>
 
       <Radix.ToolbarRoot class="flex items-center justify-center" loop>
