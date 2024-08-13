@@ -1,4 +1,5 @@
 import type { ElementSize, Position } from '@vueuse/core';
+import type { CSSProperties } from 'vue';
 
 // 标尺中每小格代表的宽度(根据scale的不同实时变化)
 const getGridSize = (scale: number) => {
@@ -30,6 +31,7 @@ export const renderRuler = (
   },
   h?: boolean, // 横向为true,纵向缺省
 ) => {
+  debugger;
   const { scale, width, height, ratio, palette } = options;
   const { bgColor, fontColor, shadowColor, longfgColor, shortfgColor } = palette;
   // console.log(start, 'startstart')
@@ -177,7 +179,7 @@ const Ruler = defineComponent({
     const drpRef = computed(() => props.ratio || window.devicePixelRatio || 1);
 
     // Private
-    let canvasContext: CanvasRenderingContext2D;
+    let canvasContext: CanvasRenderingContext2D | undefined;
 
     // Canvas
     // ----------------------------------------
@@ -225,8 +227,8 @@ const Ruler = defineComponent({
       onRender();
     });
 
-    watch([props.width, props.height], onUpdate);
-    watch([props.start, props.width, props.height], onRender);
+    watch(() => [props.width, props.height], onUpdate);
+    watch(() => [props.start, props.width, props.height], onRender);
 
     // const handle = (e: MouseEvent, key: string) => {
     //   const getValueByOffset = (offset: number, start: number, scale: number) =>
@@ -258,92 +260,96 @@ const Ruler = defineComponent({
 const RulerLine = defineComponent({
   name: 'RulerLine',
   props: {
-    zoom: Number,
+    zoom: {
+      type: Number,
+      default: 1,
+    },
     color: String,
-
-    scale: Number,
-    thick: Number,
-    palette: Object as PropType<RulerPalette>,
-    index: Number,
-    start: Number,
-    vertical: Boolean,
-    value: Number,
-    isShowReferLine: Boolean,
+    disabled: Boolean,
+    disabledColor: String,
+    orientation: {
+      type: String as PropType<'vertical' | 'horizontal'>,
+      default: 'horizontal',
+    },
+    basicValue: {
+      type: Number,
+      default: 0,
+    },
+    modelValue: Number,
   },
-  emits: ['onMouseDown', 'onRelease', 'onRemove'],
+  emits: {
+    dragstart: (value: number) => true,
+    dragmove: (value: number) => true,
+    dragend: (value: number) => true,
+    'delete': () => true,
+  },
   setup(props, { emit }) {
-    const startValue = ref(0);
-    const showLine = ref(true);
-    onMounted(() => {
-      startValue.value = props.value!;
-    });
-    const setShowLine = (offset: number) => {
-      showLine.value = offset >= 0;
-    };
-    const offset = computed(() => {
-      const offset = (startValue.value - props.start!) * props.scale!;
-      setShowLine(offset);
-      const positionValue = offset + 'px';
-      const position = props.vertical ? { top: positionValue } : { left: positionValue };
-      return position;
-    });
-    const borderCursor = computed(() => {
-      const borderValue = `1px solid ${props.palette?.lineColor}`;
-      const border = props.vertical ? { borderTop: borderValue } : { borderLeft: borderValue };
-      const cursorValue = props.isShowReferLine
-        ? props.vertical
-          ? 'ns-resize'
-          : 'ew-resize'
-        : 'none';
-      return {
-        cursor: cursorValue,
-        ...border,
-      };
-    });
-    const actionStyle = computed(() => {
-      const actionStyle = props.vertical
-        ? { left: props.thick + 'px' }
-        : { top: props.thick + 'px' };
-      return actionStyle;
+    const currentRef = ref(props.modelValue || 0);
+
+    const rootStyle = computed(() => {
+      const s: CSSProperties = {};
+      s['--offset'] = currentRef.value - props.basicValue;
+      return s;
     });
 
-    const handleDown = (e: MouseEvent) => {
-      const startD = props.vertical ? e.clientY : e.clientX;
-      const initValue = startValue.value;
+    const lineStyle = computed(() => {
+      const s: CSSProperties = {};
+      s.background = props.color;
 
-      emit('onMouseDown');
-      const onMove = (e: MouseEvent) => {
-        const currentD = props.vertical ? e.clientY : e.clientX;
-        const newValue = Math.round(initValue + (currentD - startD) / props.scale!);
-        startValue.value = newValue;
+      if (props.orientation === 'horizontal') {
+        s.cursor = 'ew-resize';
+        s.width = '1px';
+      } else if (props.orientation === 'vertical') {
+        s.cursor = 'ns-resize';
+        s.height = '1px';
+      }
+
+      return s;
+    });
+
+    function handleDelete() {
+      emit('delete');
+    }
+
+    const asPosition = (e: MouseEvent) => {
+      let pos = 0;
+      let orientation = props.orientation;
+
+      if (orientation === 'horizontal') {
+        pos = e.clientX;
+      } else if (orientation === 'vertical') {
+        pos = e.clientY;
+      }
+
+      return pos;
+    };
+
+    const handleMouseDown = (e: MouseEvent) => {
+      let start = asPosition(e);
+      emit('dragstart', start);
+
+      const onDragMove = (e: MouseEvent) => {
+        let current = asPosition(e);
+        let next = Math.round(currentRef.value + (current - start) / props.zoom);
+        emit('dragmove', next);
+        currentRef.value = next;
       };
-      const onEnd = () => {
-        emit('onRelease', startValue.value, props.index);
-        document.removeEventListener('mousemove', onMove);
-        document.removeEventListener('mouseup', onEnd);
+      const onDragEnd = () => {
+        emit('dragend', currentRef.value);
+        document.removeEventListener('mousemove', onDragMove);
+        document.removeEventListener('mouseup', onDragEnd);
       };
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onEnd);
+
+      document.addEventListener('mousemove', onDragMove);
+      document.addEventListener('mouseup', onDragEnd);
     };
-    const handleRemove = () => {
-      emit('onRemove', props.index);
-    };
-    return {
-      startValue,
-      showLine,
-      offset,
-      borderCursor,
-      actionStyle,
-      handleDown,
-      handleRemove,
-    };
-  },
-  render() {
-    return (
-      <div v-show="showLine" class="line" style={[this.offset, this.borderCursor]} onMousedown={this.handleDown}>
-        <div class="action" style={this.actionStyle}>
-          <span class="del" onClick={this.handleRemove}>&times;</span>
-          <span class="value">{ this.startValue }</span>
+
+    return () => (
+      <div class="ui-RulerLine relative" style={rootStyle.value}>
+        <div class="line" style={lineStyle.value} onClick={handleMouseDown} />
+        <div class="absolute top-0 left-0 z-1 flex items-center gap-1">
+          <div class="inline-flex items-center bg-white text-black p-1">{ currentRef.value }</div>
+          <div class="i-vscode-close" onClick={handleDelete} />
         </div>
       </div>
     );
@@ -600,7 +606,7 @@ const RulerRoot = defineComponent({
     };
   },
   render() {
-
+    return null;
   },
 });
 
