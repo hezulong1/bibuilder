@@ -34,13 +34,16 @@ const rulerOptions = reactive({
   // canvasHeight: 500,
   palette: {
     bgColor: 'transparent',
-    hoverBg: '#fff',
-    hoverColor: '#000',
     longfgColor: '#303030', // ruler longer mark color
     fontColor: 'rgba(255,255,255,0.5)', // ruler font color
-    shadowColor: '#52525200', // ruler shadow color
+    shadowColor: '#525252', // ruler shadow color
     lineColor: 'var(--bi-primary)',
+    // lineType: '',
+    // lockLineColor: '',
     borderColor: '#303030',
+    hoverBg: '#fff',
+    hoverColor: '#000',
+  // cornerActiveColor: '',
   },
   snapsObj: { h: [0, 100, 200], v: [130] },
   shadow: {
@@ -56,6 +59,20 @@ const rulerOptions = reactive({
     v: [0, 500],
   },
 });
+
+const rulerTheme = {
+  bgColor: 'transparent',
+  longfgColor: '#303030', // ruler longer mark color
+  fontColor: 'rgba(255,255,255,0.5)', // ruler font color
+  shadowColor: '#52525200', // ruler shadow color
+  lineColor: 'var(--bi-primary)',
+  // lineType: '',
+  // lockLineColor: '',
+  borderColor: '#303030',
+  hoverBg: '#fff',
+  hoverColor: '#000',
+  // cornerActiveColor: '',
+};
 
 </script>
 
