@@ -5,6 +5,7 @@ import SideBar from './views/SideBar.vue';
 // import Renderer from './resources/Renderer.vue';
 import { Ruler } from '@/ui/Ruler';
 import { Ruler2 } from '@/ui/Ruler2';
+import { Ruler3 } from '@/ui/Ruler3';
 
 const { width: widthRef } = useWindowSize();
 
@@ -53,6 +54,23 @@ const zoomRef = ref(1);
       axis-label-color="red"
       axis-tick-color="rgba(255,255,255,.87)"
       background-color="lightblue"
+    />
+
+    <Ruler3
+      :width="widthRef"
+      :height="heightRef"
+      :zoom="zoomRef"
+      text-color="red"
+      tick-color="rgba(255,255,255,.87)"
+    />
+
+    <Ruler3
+      orientation="vertical"
+      :width="heightRef"
+      :height="widthRef"
+      :zoom="zoomRef"
+      text-color="red"
+      tick-color="rgba(255,255,255,.87)"
     />
   </div>
 </template>
