@@ -1,11 +1,16 @@
 const restricted = [
   {
     name: '@vueuse/core',
-    importNames: ['isIOS', 'hasOwn', 'hyphenate', 'camelize', 'createReusableTemplate', 'toRef', 'toRefs'],
-  },
-  {
-    name: 'vue',
-    importNames: ['MaybeRefOrGetter', 'toValue'],
+    importNames: [
+      'isIOS',
+      'hasOwn',
+      'hyphenate',
+      'camelize',
+      'toRef',
+      'toRefs',
+      'MaybeRefOrGetter',
+      'toValue',
+    ],
   },
 ];
 

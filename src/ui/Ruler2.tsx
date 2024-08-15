@@ -65,7 +65,7 @@ export const Ruler2 = defineComponent({
         zoom: nextZoom = zoomRef.value,
         unit = props.unit,
       } = options;
-
+      console.log(nextZoom);
       zoomRef.value = nextZoom;
 
       const rulerScale = _getScale();
@@ -89,7 +89,7 @@ export const Ruler2 = defineComponent({
         canvasContext.fillStyle = props.axisLabelColor;
       }
 
-      canvasContext.translate(0.5, 0);
+      canvasContext.translate(0.5, 0.5);
       canvasContext.beginPath();
 
       const size = isHorizontal.value ? props.width : props.height;
@@ -143,11 +143,11 @@ export const Ruler2 = defineComponent({
             ? barSize
             : (j % 2 === 0 ? 10 : 7);
 
-          const [x1, y1] = isHorizontal
+          const [x1, y1] = isHorizontal.value
             ? [pos, 0]
             : [0, pos];
 
-          const [x2, y2] = isHorizontal ? [x1, y1 + lineSize] : [x1 + lineSize, y1];
+          const [x2, y2] = isHorizontal.value ? [x1, y1 + lineSize] : [x1 + lineSize, y1];
 
           canvasContext.moveTo(x1, y1);
           canvasContext.lineTo(x2, y2);
@@ -168,7 +168,7 @@ export const Ruler2 = defineComponent({
 
         let origin = barSize * 0.75;
 
-        const [startX, startY] = isHorizontal
+        const [startX, startY] = isHorizontal.value
           ? [startPos + -1 * -3, origin]
           : [origin, startPos + -1 * 3];
 
@@ -176,7 +176,7 @@ export const Ruler2 = defineComponent({
           let backgroundOffset = 0;
           canvasContext.save();
           canvasContext.fillStyle = backgroundColor;
-          if (isHorizontal) {
+          if (isHorizontal.value) {
             canvasContext.fillRect(startX + offset[0] + backgroundOffset, 0, textSize, barSize);
           } else {
             canvasContext.translate(0, startY + offset[1]);
@@ -188,7 +188,7 @@ export const Ruler2 = defineComponent({
 
         canvasContext.save();
         canvasContext.fillStyle = color;
-        if (isHorizontal) {
+        if (isHorizontal.value) {
           canvasContext.fillText(text, startX + offset[0], startY + offset[1]);
         } else {
           canvasContext.translate(startX + offset[0], startY + offset[1]);
@@ -218,11 +218,13 @@ export const Ruler2 = defineComponent({
             'only screen and (min-resolution: 1.3dppx)',
           ].join(','),
         );
-        return mq.matches ? 3 : 1;
+        return mq.matches ? 3 : 2;
       }
     }
 
     useResizeObserver(canvasRef, _onResize);
+
+    watch(() => props.zoom, value => draw({ zoom: value }));
 
     tryOnMounted(() => {
       canvasContext = canvasRef.value?.getContext('2d', { alpha: true })!;

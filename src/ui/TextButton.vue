@@ -83,7 +83,7 @@ function onPointerUp(e: PointerEvent) {
 <template>
   <a
     class="ui-TextButton
-      inline-flex items-center justify-center
+      inline-flex items-center justify-center shrink-0
       rounded-sm align-top
       transition-colors duration-300
       no-underline

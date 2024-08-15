@@ -3,7 +3,7 @@ import TitleBar from './views/TitleBar.vue';
 import ActivityBar from './views/ActivityBar.vue';
 import SideBar from './views/SideBar.vue';
 // import Renderer from './resources/Renderer.vue';
-import { Ruler } from '@/ui/Ruler';
+import { Ruler4 } from '@/ui/Ruler4';
 import { Ruler2 } from '@/ui/Ruler2';
 import { Ruler3 } from '@/ui/Ruler3';
 
@@ -38,39 +38,55 @@ const zoomRef = ref(1);
       :start-num-y="Number.NEGATIVE_INFINITY"
       :end-num-y="Number.POSITIVE_INFINITY"
     /> -->
-    <Ruler
-      :width="widthRef"
-      :height="heightRef"
-      :zoom="zoomRef"
-      axis-label-color="red"
-      axis-tick-color="rgba(255,255,255,.87)"
-      background-color="lightblue"
-    />
-
-    <Ruler2
-      :width="widthRef"
-      :height="heightRef"
-      :zoom="zoomRef"
-      axis-label-color="red"
-      axis-tick-color="rgba(255,255,255,.87)"
-      background-color="lightblue"
-    />
-
-    <Ruler3
+    <Ruler4
       :width="widthRef"
       :height="heightRef"
       :zoom="zoomRef"
       text-color="red"
       tick-color="rgba(255,255,255,.87)"
+      fill-color="lightblue"
     />
+    <br>
+    {{ zoomRef }}
+    <input v-model.number="zoomRef" type="range" min="0.3" max="3" step="0.1">
 
-    <Ruler3
+    <!-- <Ruler
       orientation="vertical"
       :width="heightRef"
       :height="widthRef"
       :zoom="zoomRef"
       text-color="red"
       tick-color="rgba(255,255,255,.87)"
+      fill-color="lightblue"
+    /> -->
+
+    <Ruler2
+      :width="widthRef"
+      :height="heightRef"
+      :zoom="zoomRef"
+      class="w-full"
+      axis-label-color="#fff"
+      axis-tick-color="rgba(255,255,255,.87)"
+      background-color="#181818"
+    />
+
+    <Ruler3
+      :width="widthRef"
+      :height="heightRef"
+      :zoom="zoomRef"
+      text-color="red"
+      tick-color="rgba(255,255,255,.87)"
+    />
+
+    <Ruler2
+      type="vertical"
+      class="h-full"
+      :width="heightRef"
+      :height="widthRef"
+      :zoom="zoomRef"
+      axis-label-color="#fff"
+      axis-tick-color="rgba(255,255,255,.87)"
+      background-color="#181818"
     />
   </div>
 </template>

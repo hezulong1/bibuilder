@@ -38,6 +38,10 @@ export const Ruler3 = defineComponent({
     });
 
     tryOnMounted(() => {
+      draw();
+    });
+
+    function onResize() {
       if (props.width) {
         widthRef.value = props.width === '100%' ? (rulerRef.value?.clientWidth ?? 0) : props.width;
         rulerRef.value?.style.setProperty('width', `${widthRef.value}px`);
@@ -56,17 +60,17 @@ export const Ruler3 = defineComponent({
         __DEV__ && console.warn('`heightRef.value` is `NaN`.');
         heightRef.value = 0;
       }
-
-      draw();
-    });
+    }
 
     function draw() {
+      onResize();
+
       const tickList: number[] = [];
 
       let originMaximum = maximumValue.value;
       let originInterval = intervalValue.value;
 
-      let curTick = props.start || 0;
+      let curTick = Math.floor((props.start || 0) / originInterval) * originInterval;
       let eachTick = Math.floor(originInterval / 10);
       let maxTick = Math.ceil(originMaximum / originInterval) * originInterval;
 
@@ -82,7 +86,7 @@ export const Ruler3 = defineComponent({
       draw,
     });
 
-    watch(() => [widthRef, heightRef], draw);
+    watch(() => [props.width, props.height], draw);
 
     return () => (
       <svg ref={rulerRef} class="ui-Ruler block size-full">
@@ -94,7 +98,7 @@ export const Ruler3 = defineComponent({
             const isIntervalTick = i % 10 === 0;
             const isMiddleTick = i % 5 === 0;
             const percent = isIntervalTick ? 0.8 : isMiddleTick ? 0.5 : 0.35;
-            const realValue = pos === 0 ? 0.5 : pos;
+            const realValue = pos + 0.5;
 
             if (isVerticalRef.value) {
               y1 = y2 = realValue;

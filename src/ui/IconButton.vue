@@ -88,7 +88,7 @@ function onPointerUp(e: PointerEvent) {
       content: title,
     }"
     class="ui-IconButton
-      inline-flex items-center justify-center
+      inline-flex items-center justify-center shrink-0
       rounded-sm align-top
       transition-colors duration-300
       no-underline
