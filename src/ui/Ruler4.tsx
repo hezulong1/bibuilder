@@ -70,7 +70,7 @@ const Ruler4 = defineComponent({
       const { value: height } = heightRef;
       const { value: zoom } = zoomRef;
 
-      // canvasContext.save();
+      canvasContext.save();
       canvasContext.scale(scale, scale);
       canvasContext.clearRect(0, 0, width * scale, height * scale);
       if (fillColor) {
@@ -95,7 +95,7 @@ const Ruler4 = defineComponent({
       // maxRange
       let endValue = start + Math.ceil(originMaximum);
 
-      // canvasContext.translate(0.5, 0.5);
+      canvasContext.translate(0.5, 0.5);
       canvasContext.beginPath();
       if (textColor) canvasContext.fillStyle = textColor;
       if (tickColor) canvasContext.strokeStyle = tickColor;
@@ -111,8 +111,8 @@ const Ruler4 = defineComponent({
 
       for (let i = 0, l = tickList.length; i < l; i++) {
         const pos = tickList[i] + offsetValue;
-        const isPrimary = i % (originInterval * 10) === 0;
-        const isCenter = i % (5 * 10) === 0;
+        const isPrimary = i % 10 === 0;
+        const isCenter = i % 5 === 0;
         const percent = isPrimary ? 80 : isCenter ? 50 : 35;
 
         const [sx, sy] = isVertical ? [0, pos] : [pos, 0];
@@ -130,7 +130,7 @@ const Ruler4 = defineComponent({
             canvasContext.rotate(Math.PI / -2);
           }
 
-          canvasContext.fillText(i.toString(), 4 * scale, 8 * scale);
+          canvasContext.fillText((i * originInterval).toString(), 4, 8);
           canvasContext.restore();
         }
 
@@ -201,7 +201,7 @@ const Ruler4 = defineComponent({
       //   brandTick += brandOriginInterval;
       //   brandIndex += 1;
       // }
-
+      canvasContext.restore();
       isDrawing.value = false;
     }
 
@@ -275,9 +275,9 @@ const Ruler4 = defineComponent({
     ].join(',');
 
     function _getScale() {
-      if (window.devicePixelRatio > 1) return window.devicePixelRatio;
+      if (window.devicePixelRatio > 1) return 3;
       const mq = window.matchMedia(dprMedia);
-      return mq.matches ? 2 : 1;
+      return mq.matches ? 3 : 2;
     }
 
     return () => <canvas ref={canvasRef} class="ui-Ruler" style={canvasStyle.value} />;

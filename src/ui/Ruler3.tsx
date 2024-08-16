@@ -26,8 +26,8 @@ export const Ruler3 = defineComponent({
     const widthRef = ref(0);
     const heightRef = ref(0);
     const ticksRef = ref<number[]>([]);
-    const maximumValue = computed(() => isVerticalRef.value ? heightRef.value : widthRef.value);
-    const intervalValue = computed(() => {
+    const maximumSize = computed(() => isVerticalRef.value ? heightRef.value : widthRef.value);
+    const intervalSize = computed(() => {
       const zoom = props.zoom;
       if (typeof zoom === 'undefined') return 50;
       if (zoom > 1.5) return 20;
@@ -67,8 +67,8 @@ export const Ruler3 = defineComponent({
 
       const tickList: number[] = [];
 
-      let originMaximum = maximumValue.value;
-      let originInterval = intervalValue.value;
+      let originMaximum = maximumSize.value;
+      let originInterval = intervalSize.value;
 
       let curTick = Math.floor((props.start || 0) / originInterval) * originInterval;
       let eachTick = Math.floor(originInterval / 10);
@@ -95,9 +95,9 @@ export const Ruler3 = defineComponent({
             let x1 = 0.5, y1 = 0.5;
             let x2 = 0.5, y2 = 0.5;
 
-            const isIntervalTick = i % 10 === 0;
-            const isMiddleTick = i % 5 === 0;
-            const percent = isIntervalTick ? 0.8 : isMiddleTick ? 0.5 : 0.35;
+            const isPrimary = i % 10 === 0;
+            const isCenter = i % 5 === 0;
+            const percent = isPrimary ? 0.8 : isCenter ? 0.5 : 0.35;
             const realValue = pos + 0.5;
 
             if (isVerticalRef.value) {
@@ -108,14 +108,15 @@ export const Ruler3 = defineComponent({
               y2 = percent * 100 * heightRef.value / 100;
             }
 
-            const vnodes = [<line x1={x1} x2={x2} y1={y1} y2={y2} stroke={props.tickColor} stroke-width={1} />];
+            const vnodes = [<line key={`line-${i}`} x1={x1} x2={x2} y1={y1} y2={y2} stroke={props.tickColor} stroke-width={1} />];
 
-            if (isIntervalTick) {
+            if (isPrimary) {
               let x = isVerticalRef.value ? x2 : (x2 + 4);
               let y = isVerticalRef.value ? (y2 + 4) : y2;
               let trans = isVerticalRef.value ? `rotate(-90, ${x - 4}, ${y - 4})` : undefined;
               vnodes.push(
                 <text
+                  key={`text-${i}`}
                   x={x}
                   y={y}
                   fill={props.textColor}
@@ -123,7 +124,7 @@ export const Ruler3 = defineComponent({
                   font-family="-apple-system, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif"
                   transform={trans}
                 >
-                  {i * intervalValue.value / 10}
+                  {i * intervalSize.value / 10}
                 </text>,
               );
             }

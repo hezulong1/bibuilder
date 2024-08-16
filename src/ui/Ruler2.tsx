@@ -134,14 +134,18 @@ export const Ruler2 = defineComponent({
         for (let j = 0; j < segment; ++j) {
           const pos = startPos + j / segment * zoomUnit;
           const value = startValue + j / segment * unit;
+          const isPrimary = j % segment === 0;
+          const isCenter = (j % (segment / 2)) === 0;
 
           if (pos < 0 || pos >= size || value < range[0] || value > range[1]) {
             continue;
           }
 
-          const lineSize = j === 0
-            ? barSize
-            : (j % 2 === 0 ? 10 : 7);
+          // const lineSize = j === 0
+          //   ? barSize
+          //   : (j % 2 === 0 ? 10 : 7);
+
+          const lineSize = isPrimary ? barSize : isCenter ? (barSize / 2) : (barSize / 4);
 
           const [x1, y1] = isHorizontal.value
             ? [pos, 0]

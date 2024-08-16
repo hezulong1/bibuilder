@@ -44,7 +44,6 @@ const zoomRef = ref(1);
       :zoom="zoomRef"
       text-color="red"
       tick-color="rgba(255,255,255,.87)"
-      fill-color="lightblue"
     />
     <br>
     {{ zoomRef }}
