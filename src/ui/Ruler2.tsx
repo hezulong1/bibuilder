@@ -209,21 +209,18 @@ export const Ruler2 = defineComponent({
       resize();
     }
 
+    const dprMedia = [
+      'only screen and (min--moz-device-pixel-ratio: 1.3)',
+      'only screen and (-o-min-device-pixel-ratio: 2.6/2)',
+      'only screen and (-webkit-min-device-pixel-ratio: 1.3)',
+      'only screen and (min-device-pixel-ratio: 1.3)',
+      'only screen and (min-resolution: 1.3dppx)',
+    ].join(',');
+
     function _getScale() {
-      if (window.devicePixelRatio > 1) {
-        return 3;
-      } else {
-        const mq = window.matchMedia(
-          [
-            'only screen and (min--moz-device-pixel-ratio: 1.3)',
-            'only screen and (-o-min-device-pixel-ratio: 2.6/2)',
-            'only screen and (-webkit-min-device-pixel-ratio: 1.3)',
-            'only screen and (min-device-pixel-ratio: 1.3)',
-            'only screen and (min-resolution: 1.3dppx)',
-          ].join(','),
-        );
-        return mq.matches ? 3 : 2;
-      }
+      if (window.devicePixelRatio > 1) return 3;
+      const mq = window.matchMedia(dprMedia);
+      return mq.matches ? 3 : 2;
     }
 
     useResizeObserver(canvasRef, _onResize);

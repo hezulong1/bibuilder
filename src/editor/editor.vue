@@ -5,7 +5,7 @@ import SideBar from './views/SideBar.vue';
 // import Renderer from './resources/Renderer.vue';
 import { Ruler4 } from '@/ui/Ruler4';
 import { Ruler2 } from '@/ui/Ruler2';
-import { Ruler3 } from '@/ui/Ruler3';
+import RulerX from '@/ui/RulerX';
 
 const { width: widthRef } = useWindowSize();
 
@@ -49,6 +49,8 @@ const zoomRef = ref(1);
     {{ zoomRef }}
     <input v-model.number="zoomRef" type="range" min="0.3" max="3" step="0.1">
 
+    <RulerX :width="widthRef" :height="heightRef" class="w-full" />
+
     <!-- <Ruler
       orientation="vertical"
       :width="heightRef"
@@ -67,14 +69,6 @@ const zoomRef = ref(1);
       axis-label-color="#fff"
       axis-tick-color="rgba(255,255,255,.87)"
       background-color="#181818"
-    />
-
-    <Ruler3
-      :width="widthRef"
-      :height="heightRef"
-      :zoom="zoomRef"
-      text-color="red"
-      tick-color="rgba(255,255,255,.87)"
     />
 
     <Ruler2
